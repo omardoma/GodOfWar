@@ -1,16 +1,13 @@
 ﻿using UnityEngine;
-using System.Collections;
 
-public class NewMonoBehaviour : MonoBehaviour
+public class CheatEngine : MonoBehaviour
 {
-    // Use this for initialization
-    void Start()
-    {
+    [Tooltip("The player controller to control health and etc...")]
+    public GameObject player;
+    [Tooltip("The game manager to control any environment or level variable")]
+    public GameObject gameManager;
 
-    }
-
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
 
     }
