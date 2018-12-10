@@ -57,7 +57,7 @@ public class GameScreenController : MonoBehaviour
 
     public void SetLevel(float level)
     {
-        this.level.text = "Level: " + (level < 1 ? 1 : level > 2 ? 2 : level);
+        this.level.text = "Level: " + (level < 1 ? 1 : level);
     }
 
     public void SetSkillPoints(float sp)
