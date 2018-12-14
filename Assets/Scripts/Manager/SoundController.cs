@@ -109,7 +109,7 @@ public class SoundController : MonoBehaviour
 
     public void PlayCalmMusic()
     {
-        UnPause();
+        UnpauseSounds();
         musicSource.clip = sounds[11];
         if (!seekPosition.Equals(0))
         {
@@ -121,7 +121,7 @@ public class SoundController : MonoBehaviour
 
     public void PlayActionMusic()
     {
-        UnPause();
+        UnpauseSounds();
         musicSource.clip = sounds[12];
         if (!seekPosition.Equals(0))
         {
@@ -138,7 +138,7 @@ public class SoundController : MonoBehaviour
         speechSource.Pause();
     }
 
-    public void UnPause()
+    public void UnpauseSounds()
     {
         sfxSource.UnPause();
         speechSource.UnPause();
