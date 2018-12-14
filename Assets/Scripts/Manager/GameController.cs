@@ -41,7 +41,7 @@ public class GameController : MonoBehaviour
     {
         if (!GameOver)
         {
-            if (PlayerController.Instance.isDead())
+            if (PlayerController.Instance.Dead)
             {
                 EndGame();
                 return;

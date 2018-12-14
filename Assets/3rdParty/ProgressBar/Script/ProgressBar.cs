@@ -39,7 +39,7 @@ public class ProgressBar : MonoBehaviour
 
         set
         {
-            value = Mathf.Clamp(value, 0, 100);
+            value = Mathf.Clamp(value, 0, 500);
             barValue = value;
             UpdateValue(barValue);
 
@@ -75,8 +75,8 @@ public class ProgressBar : MonoBehaviour
 
     void UpdateValue(float val)
     {
-        bar.fillAmount = val / 100;
-        txtTitle.text = Title + " " + val + "%";
+        bar.fillAmount = val / 500;
+        txtTitle.text = Title + " " + val;
 
         if (Alert >= val)
         {

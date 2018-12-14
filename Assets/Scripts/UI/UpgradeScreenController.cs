@@ -3,10 +3,10 @@ using UnityEngine.UI;
 
 public class UpgradeScreenController : MonoBehaviour
 {
-    private float skillPoints;
     public ProgressBar movementBar;
     public Button movementAdd;
-    public ProgressBar attackBar;
+    public ProgressBar lightAttackBar;
+    public ProgressBar heavyAttackBar;
     public Button attackAdd;
     public ProgressBar healthBar;
     public Button healthAdd;
@@ -14,46 +14,49 @@ public class UpgradeScreenController : MonoBehaviour
 
     private void Start()
     {
-        skillPoints = 1;
+        movementBar.BarValue = PlayerController.Instance.GetSpeed();
+        lightAttackBar.BarValue = PlayerController.Instance.GetLightDamage();
+        heavyAttackBar.BarValue = PlayerController.Instance.GetHeavyDamage();
+        healthBar.BarValue = PlayerController.Instance.GetHealthPoints();
         SetSkillPoints();
         HideButtonsOnZero();
     }
 
     private void HideButtonsOnZero()
     {
-        movementAdd.gameObject.SetActive(skillPoints > 0 && !movementBar.BarValue.Equals(100));
-        attackAdd.gameObject.SetActive(skillPoints > 0 && !attackBar.BarValue.Equals(100));
-        healthAdd.gameObject.SetActive(skillPoints > 0 && !healthBar.BarValue.Equals(100));
+        bool hasLeft = PlayerController.Instance.GetSkillPoints() > 0;
+        movementAdd.gameObject.SetActive(hasLeft);
+        attackAdd.gameObject.SetActive(hasLeft);
+        healthAdd.gameObject.SetActive(hasLeft);
     }
 
     public void AddMovement()
     {
-        movementBar.BarValue = movementBar.BarValue < 100 ? movementBar.BarValue + 10 : 100;
-        DecreaseSkillPoints();
+        PlayerController.Instance.UpgradeMovement();
+        movementBar.BarValue = PlayerController.Instance.GetSpeed();
+        SetSkillPoints();
         HideButtonsOnZero();
     }
 
     public void AddAttack()
     {
-        attackBar.BarValue = attackBar.BarValue < 100 ? attackBar.BarValue + 10 : 100;
-        DecreaseSkillPoints();
+        PlayerController.Instance.UpgradeAttack();
+        lightAttackBar.BarValue = PlayerController.Instance.GetLightDamage();
+        heavyAttackBar.BarValue = PlayerController.Instance.GetHeavyDamage();
+        SetSkillPoints();
         HideButtonsOnZero();
     }
 
     public void AddHealth()
     {
-        healthBar.BarValue = healthBar.BarValue < 100 ? healthBar.BarValue + 10 : 100;
-        DecreaseSkillPoints();
+        PlayerController.Instance.UpgradeHealth();
+        healthBar.BarValue = PlayerController.Instance.GetHealthPoints();
+        SetSkillPoints();
         HideButtonsOnZero();
     }
 
     public void SetSkillPoints()
     {
-        skillPointsText.text = "Skill Points: " + skillPoints;
-    }
-
-    public void DecreaseSkillPoints()
-    {
-        skillPointsText.text = "Skill Points: " + (skillPoints.Equals(0) ? 0 : --skillPoints);
+        skillPointsText.text = "Skill Points: " + PlayerController.Instance.GetSkillPoints();
     }
 }

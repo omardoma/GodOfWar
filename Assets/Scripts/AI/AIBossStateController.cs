@@ -55,7 +55,7 @@ public class AIBossStateController : MonoBehaviour
         // Move from Patrol state to Charge state.
         Vector3 DistanceBetweenEnemyAndPlayer = playerTransform.position - transform.position;
         float DistanceBetweenEnemyAndPlayerMagnitude = DistanceBetweenEnemyAndPlayer.sqrMagnitude;
-        if ((DistanceBetweenEnemyAndPlayerMagnitude <= ChargingDistance) && state == State.Patrol && !PlayerController.Instance.isDead())
+        if ((DistanceBetweenEnemyAndPlayerMagnitude <= ChargingDistance) && state == State.Patrol && !PlayerController.Instance.Dead)
         {
             ChangeStateToCharge();
         }
@@ -91,7 +91,7 @@ public class AIBossStateController : MonoBehaviour
 
     bool canAttack()
     {
-        return !stunned && state == State.Charge && !PlayerController.Instance.isDead() && (System.Math.Abs(lastAttackTime) < 0.1 || Time.time >= lastAttackTime + AttackScript.AttackCooldownInSecs * 60 * Time.deltaTime);
+        return !stunned && state == State.Charge && !PlayerController.Instance.Dead && (System.Math.Abs(lastAttackTime) < 0.1 || Time.time >= lastAttackTime + AttackScript.AttackCooldownInSecs * 60 * Time.deltaTime);
     }
 
     void ChangeStateToCharge()
@@ -146,7 +146,7 @@ public class AIBossStateController : MonoBehaviour
         }
 
         lastAttackTime = Time.time;
-        if (!PlayerController.Instance.isDead())
+        if (!PlayerController.Instance.Dead)
             ChangeStateToCharge();
     }
 

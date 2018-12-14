@@ -47,7 +47,7 @@ public class AIEnemyStateController : MonoBehaviour
         // Move from Patrol state to Charge state.
         Vector3 DistanceBetweenEnemyAndPlayer = playerTransform.position - transform.position;
         float DistanceBetweenEnemyAndPlayerMagnitude = DistanceBetweenEnemyAndPlayer.sqrMagnitude;
-        if ((DistanceBetweenEnemyAndPlayerMagnitude <= ChargingDistance) && state == State.Patrol && !PlayerController.Instance.isDead())
+        if ((DistanceBetweenEnemyAndPlayerMagnitude <= ChargingDistance) && state == State.Patrol && !PlayerController.Instance.Dead)
         {
             changeStateToCharge();
         }
@@ -68,7 +68,7 @@ public class AIEnemyStateController : MonoBehaviour
             }
         }
 
-        if (state == State.Charge && !PlayerController.Instance.isDead())
+        if (state == State.Charge && !PlayerController.Instance.Dead)
         {
             if (Agent.velocity == Vector3.zero)
             {
@@ -86,7 +86,7 @@ public class AIEnemyStateController : MonoBehaviour
 
     bool canAttack()
     {
-        return state == State.Charge && !PlayerController.Instance.isDead() && (System.Math.Abs(lastAttackTime) < 0.1 || Time.time >= lastAttackTime + AttackScript.AttackCooldownInSecs * 60 * Time.deltaTime);
+        return state == State.Charge && !PlayerController.Instance.Dead && (System.Math.Abs(lastAttackTime) < 0.1 || Time.time >= lastAttackTime + AttackScript.AttackCooldownInSecs * 60 * Time.deltaTime);
     }
 
     void changeStateToCharge()
@@ -113,7 +113,7 @@ public class AIEnemyStateController : MonoBehaviour
         state = State.Attack;
         AttackScript.Attack(playerTransform);
         lastAttackTime = Time.time;
-        if (PlayerController.Instance.isDead())
+        if (PlayerController.Instance.Dead)
             changeStateToPatrol();
         else
             changeStateToCharge();
@@ -130,7 +130,7 @@ public class AIEnemyStateController : MonoBehaviour
         // AttackScript.attack(playerTransform);
         AttackScript.RangedAttack(playerTransform);
         lastAttackTime = Time.time;
-        if (PlayerController.Instance.isDead())
+        if (PlayerController.Instance.Dead)
             changeStateToPatrol();
         else
             changeStateToCharge();
