@@ -566,7 +566,6 @@ GameObject:
   - component: {fileID: 4363775258977642}
   - component: {fileID: 33493981298068482}
   - component: {fileID: 23237180312382480}
-  - component: {fileID: 111216932658898300}
   - component: {fileID: 65881202779320194}
   m_Layer: 0
   m_Name: Dagger
@@ -1238,7 +1237,6 @@ GameObject:
   - component: {fileID: 4587605827085466}
   - component: {fileID: 33233174441133246}
   - component: {fileID: 23106451264299214}
-  - component: {fileID: 111716825697314148}
   - component: {fileID: 114875866457256800}
   - component: {fileID: 65053402266024050}
   m_Layer: 0
@@ -3009,7 +3007,7 @@ BoxCollider:
   m_GameObject: {fileID: 1857266943200098}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 0.02, y: 0.20647186, z: 0.4655009}
   m_Center: {x: 0.00000030837117, y: -0.043427885, z: -0.25014758}
@@ -3021,7 +3019,7 @@ BoxCollider:
   m_GameObject: {fileID: 1449123482650264}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 0.02, y: 0.20647186, z: 0.4655009}
   m_Center: {x: 0.00000030837117, y: -0.043427885, z: -0.25014758}
@@ -3043,34 +3041,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!111 &111216932658898300
-Animation:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1449123482650264}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Animation: {fileID: 0}
-  m_Animations: []
-  m_WrapMode: 0
-  m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
-  m_CullingType: 0
---- !u!111 &111716825697314148
-Animation:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1857266943200098}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Animation: {fileID: 0}
-  m_Animations: []
-  m_WrapMode: 0
-  m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
-  m_CullingType: 0
 --- !u!114 &114393198327716416
 MonoBehaviour:
   m_ObjectHideFlags: 1

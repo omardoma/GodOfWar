@@ -8,7 +8,7 @@ public class GameScreenController : MonoBehaviour
     public ProgressBar healthBar;
     public ProgressBar rageBar;
     public ProgressBar xpBar;
-    public Text level;
+    public Text levelText;
     public Text skillPoints;
 
     public static GameScreenController Instance
@@ -31,37 +31,42 @@ public class GameScreenController : MonoBehaviour
         //DontDestroyOnLoad(this.gameObject);
     }
 
-    private void Start()
+    private void Update()
     {
-        SetHealth(100);
-        SetRage(0);
-        SetXP(0);
-        SetLevel(1);
-        SetSkillPoints(0);
+        SetHealth();
+        SetRage();
+        SetXP();
+        SetLevel();
+        SetSkillPoints();
     }
 
-    public void SetHealth(float health)
+    private void SetHealth()
     {
+        float health = PlayerController.Instance.GetHealthPoints();
         healthBar.BarValue = health < 0 ? 0 : health > 100 ? 100 : health;
     }
 
-    public void SetRage(float rage)
+    private void SetRage()
     {
+        float rage = PlayerController.Instance.GetRage();
         rageBar.BarValue = rage < 0 ? 0 : rage > 100 ? 100 : rage;
     }
 
-    public void SetXP(float xp)
+    private void SetXP()
     {
+        float xp = PlayerController.Instance.GetXp();
         xpBar.BarValue = xp < 0 ? 0 : xp > 100 ? 100 : xp;
     }
 
-    public void SetLevel(float level)
+    private void SetLevel()
     {
-        this.level.text = "Level: " + (level < 1 ? 1 : level);
+        int level = PlayerController.Instance.GetLevel();
+        this.levelText.text = "Level: " + (level < 1 ? 1 : level);
     }
 
-    public void SetSkillPoints(float sp)
+    private void SetSkillPoints()
     {
+        float sp = PlayerController.Instance.GetSkillPoints();
         skillPoints.text = "Skill Points: " + (sp < 0 ? 0 : sp);
     }
 }

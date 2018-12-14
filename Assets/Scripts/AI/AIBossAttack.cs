@@ -6,8 +6,10 @@ public class AIBossAttack : MonoBehaviour
     public int AttackCooldownInSecs = 5;
     public float rangedAttackDistance;
 
-    public void Attack(GameObject weakPoint = null)
+    public void Attack(Transform target, GameObject weakPoint = null)
     {
+        RotateTowards(target);
+
         RaycastHit hit;
         if (Physics.Raycast(transform.position, transform.forward, out hit))
         {
@@ -20,5 +22,12 @@ public class AIBossAttack : MonoBehaviour
                 //Start player getting hit animation
             }
         }
+    }
+
+    private void RotateTowards(Transform target)
+    {
+        Vector3 direction = (target.position - transform.position).normalized;
+        Quaternion lookRotation = Quaternion.LookRotation(direction);
+        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 180);
     }
 }

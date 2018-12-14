@@ -4,12 +4,11 @@ public class PlayerController : MonoBehaviour
 {
     private static PlayerController instance;
     private int xp, targetXP, rage, skillPoints, maxRage, level;
-    private bool rageFull, rageMode;
-    private float speed, timeLeft, rageDuration, lightAttackDamage, HeavyAttackDamage;
+    private bool dead, rageFull, rageMode;
+    private float healthPoints, speed, timeLeft, rageDuration, lightAttackDamage, HeavyAttackDamage;
     private Animator anim;
     private GameObject enemy, chest;
-    public float healthPoints;
-    public bool dead, won, nearChest;
+    public bool won, nearChest;
 
     public static PlayerController Instance
     {
@@ -49,59 +48,63 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonUp(0))
+        if (!(GameController.Instance.GamePaused || GameController.Instance.GameOver))
         {
-            DaggerScript.Instance.attackDoneType = 1;
-            anim.SetTrigger("LightAttack");
-        }
-
-        if (Input.GetMouseButtonUp(1))
-        {
-            DaggerScript.Instance.attackDoneType = 2;
-            anim.SetTrigger("HeavyAttack");
-        }
-
-        if (Input.GetKeyUp(KeyCode.LeftControl))
-        {
-            anim.SetTrigger("Evade");
-        }
-
-        CheckRage(); //If the rage meter is full --> rageFull = true
-        CheckXP();
-
-        if (nearChest && Input.GetKeyDown(KeyCode.X) && !chest.GetComponent<ChestScript>().GetChestOpened())
-        {
-            chest.GetComponent<ChestScript>().SetOpen(true);
-            RestoreHealth();
-        }
-
-        // KRATOS DEATH:
-        if (healthPoints <= 0)
-        {
-            dead = true;
-            anim.SetBool("Dead", dead);  //For the death animation to work
-        }
-
-        if (Input.GetKey(KeyCode.R) && rageFull)  //if the user presses on R (and the rage is full) --> the rage mode: ON
-        {
-            timeLeft = rageDuration;
-            rageMode = true;
-            rage = 0;
-            rageFull = false;
-            lightAttackDamage *= 2;
-            HeavyAttackDamage *= 2;
-        }
-
-        //Wait for seconds before rage mode is off
-        if (rageMode)
-        {
-            timeLeft -= Time.deltaTime;
-            if (timeLeft < 0)
+            if (Input.GetMouseButtonUp(0))
             {
-                //reset everything after the rage time is over:
-                rageMode = false;
-                lightAttackDamage /= 2;
-                HeavyAttackDamage /= 2;
+                DaggerScript.Instance.attackDoneType = 1;
+                anim.SetTrigger("LightAttack");
+            }
+
+            if (Input.GetMouseButtonUp(1))
+            {
+                DaggerScript.Instance.attackDoneType = 2;
+                anim.SetTrigger("HeavyAttack");
+            }
+
+            if (Input.GetKeyUp(KeyCode.LeftControl))
+            {
+                anim.SetTrigger("Evade");
+            }
+
+
+            CheckRage(); //If the rage meter is full --> rageFull = true
+            CheckXP();
+
+            if (nearChest && Input.GetKeyDown(KeyCode.X) && !chest.GetComponent<ChestScript>().GetChestOpened())
+            {
+                chest.GetComponent<ChestScript>().SetOpen(true);
+                RestoreHealth();
+            }
+
+            // KRATOS DEATH:
+            if (healthPoints <= 0)
+            {
+                dead = true;
+                anim.SetBool("Dead", dead);  //For the death animation to work
+            }
+
+            if (Input.GetKey(KeyCode.R) && rageFull)  //if the user presses on R (and the rage is full) --> the rage mode: ON
+            {
+                timeLeft = rageDuration;
+                rageMode = true;
+                rage = 0;
+                rageFull = false;
+                lightAttackDamage *= 2;
+                HeavyAttackDamage *= 2;
+            }
+
+            //Wait for seconds before rage mode is off
+            if (rageMode)
+            {
+                timeLeft -= Time.deltaTime;
+                if (timeLeft < 0)
+                {
+                    //reset everything after the rage time is over:
+                    rageMode = false;
+                    lightAttackDamage /= 2;
+                    HeavyAttackDamage /= 2;
+                }
             }
         }
     }
@@ -148,9 +151,10 @@ public class PlayerController : MonoBehaviour
 
     //DOOBY WILL CALL THIS WHEN KRATOS IS HIT:
     public void KratosGotHit()
+
     {
         Debug.Log("Etdarabt");
-        //when an enemy hits kratos, helath points decreases by 10:
+        //when an enemy hits kratos, health points decreases by 10:
         healthPoints -= 10.0f;
         anim.SetTrigger("Hit");
     }
@@ -185,6 +189,7 @@ public class PlayerController : MonoBehaviour
         //Destroy(chest);
         //chest = null;
     }
+
     //Getters for the variables that should appear on the screen: health, rage, level, xp, skill points:
     public float GetHealthPoints()
     {
@@ -196,9 +201,9 @@ public class PlayerController : MonoBehaviour
         return rage;
     }
 
-    public void SetRage(int r)
+    public void SetRage(int rage)
     {
-        rage = r;
+        this.rage = rage;
     }
 
     public int GetLevel()
@@ -209,11 +214,6 @@ public class PlayerController : MonoBehaviour
     public int GetXp()
     {
         return xp;
-    }
-
-    public void SetXp(int x)
-    {
-        xp = x;
     }
 
     //Return skill points available to enable/disable "upgrade skill" buttons in pause screen
@@ -230,5 +230,16 @@ public class PlayerController : MonoBehaviour
     public float GetHeavyDamage()
     {
         return HeavyAttackDamage;
+    }
+
+    public bool isDead()
+    {
+        return dead;
+    }
+
+    public void Reset()
+    {
+        healthPoints = 100;
+        rage = 0;
     }
 }

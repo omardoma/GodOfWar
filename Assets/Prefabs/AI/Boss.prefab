@@ -2194,7 +2194,6 @@ MonoBehaviour:
   - {fileID: 4451290528677274}
   - {fileID: 4121216957476936}
   - {fileID: 4894070551913328}
-  PatrolVelocity: {x: 3, y: 3, z: 3}
 --- !u!114 &114558654024734622
 MonoBehaviour:
   m_ObjectHideFlags: 1

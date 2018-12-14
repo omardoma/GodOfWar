@@ -1906,7 +1906,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1406377408997838}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -17.10742, y: -0.017, z: -14.405761}
+  m_LocalPosition: {x: 13, y: 6.8913854e-16, z: -33.4}
   m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
   m_Children:
   - {fileID: 4771739356565052}
@@ -2275,8 +2275,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
-  m_Materials:
-  - {fileID: 2100000, guid: 070818b2e7893934ba7a9dab8d0fe6a2, type: 2}
+  m_Materials: []
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2368,6 +2367,7 @@ MonoBehaviour:
   ChargingDistance: 300
   isRangedAttack: 1
   isMeleeAttack: 0
+  state: 0
 --- !u!114 &114425840963362064
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2422,7 +2422,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50c683b66b76b402eade1e8eb0dfb686, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 100
+  health: 50
 --- !u!114 &114854321179291120
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2442,7 +2442,6 @@ MonoBehaviour:
   m_MoveSpeedMultiplier: 0.7
   m_AnimSpeedMultiplier: 0.7
   m_GroundCheckDistance: 0.2
-  m_IsGrounded: 0
 --- !u!136 &136622324676177750
 CapsuleCollider:
   m_ObjectHideFlags: 1
@@ -2833,7 +2832,7 @@ NavMeshAgent:
   m_Acceleration: 10
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 1.1
+  m_StoppingDistance: 1.5
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1

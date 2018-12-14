@@ -179,7 +179,7 @@ GameObject:
   - component: {fileID: 222302413891498636}
   - component: {fileID: 114078127502270954}
   m_Layer: 5
-  m_Name: SkillPoints
+  m_Name: SkillPointsText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -214,7 +214,7 @@ GameObject:
   - component: {fileID: 222814856140984698}
   - component: {fileID: 114342242053428182}
   m_Layer: 5
-  m_Name: Level
+  m_Name: LevelText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1256,7 +1256,7 @@ MonoBehaviour:
   healthBar: {fileID: 114651880636173094}
   rageBar: {fileID: 114756028409875046}
   xpBar: {fileID: 114228384821627184}
-  level: {fileID: 114342242053428182}
+  levelText: {fileID: 114342242053428182}
   skillPoints: {fileID: 114078127502270954}
 --- !u!114 &114992711333795834
 MonoBehaviour:

@@ -29,17 +29,7 @@ public class SoundController : MonoBehaviour
         }
 
         instance = this;
-        DontDestroyOnLoad(this.gameObject);
-    }
-
-    private void Start()
-    {
-        PlayMenuMusic();
-    }
-
-    private void Update()
-    {
-
+        //DontDestroyOnLoad(this.gameObject);
     }
 
     public void SetMusicVolume(float volume)
@@ -109,10 +99,11 @@ public class SoundController : MonoBehaviour
 
     public void PlayMenuMusic()
     {
-        Pause();
+        PauseSounds();
         seekPosition = musicSource.time;
         musicSource.Stop();
         musicSource.clip = sounds[10];
+        musicSource.time = 0;
         musicSource.Play();
     }
 
@@ -140,7 +131,7 @@ public class SoundController : MonoBehaviour
         musicSource.Play();
     }
 
-    public void Pause()
+    public void PauseSounds()
     {
         musicSource.Pause();
         sfxSource.Pause();
@@ -149,8 +140,14 @@ public class SoundController : MonoBehaviour
 
     public void UnPause()
     {
-        musicSource.UnPause();
         sfxSource.UnPause();
         speechSource.UnPause();
+    }
+
+    public void Stop()
+    {
+        musicSource.Stop();
+        sfxSource.Stop();
+        speechSource.Stop();
     }
 }

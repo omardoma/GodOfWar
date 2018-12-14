@@ -2,8 +2,8 @@
 using UnityEngine.AI;
 using System.Collections.Generic;
 
-public class AIBossStateController : MonoBehaviour {
-
+public class AIBossStateController : MonoBehaviour
+{
     [Tooltip("Distance between Player and Enemy at which the enemy will start charging the player.")]
     public float ChargingDistance;
     [Tooltip("Indicates whether the enemy uses ranged attacks.")]
@@ -30,10 +30,12 @@ public class AIBossStateController : MonoBehaviour {
 
     Animator m_Animator;
 
-    void Start () {
+    void Start()
+    {
         ChargingScript = GetComponent<UnityStandardAssets.Characters.ThirdPerson.AICharacterControl>();
         PatrollingScript = GetComponent<AIBossPatrol>();
         playerTransform = GameObject.FindWithTag("Player").transform;
+        ChargingScript.target = playerTransform;
         Agent = GetComponent<NavMeshAgent>();
         AttackScript = GetComponent<AIBossAttack>();
 
@@ -48,24 +50,28 @@ public class AIBossStateController : MonoBehaviour {
         weakPoints.Add(weakPoint);
     }
 
-    void Update () {
+    void Update()
+    {
         // Move from Patrol state to Charge state.
         Vector3 DistanceBetweenEnemyAndPlayer = playerTransform.position - transform.position;
         float DistanceBetweenEnemyAndPlayerMagnitude = DistanceBetweenEnemyAndPlayer.sqrMagnitude;
-        if ((DistanceBetweenEnemyAndPlayerMagnitude <= ChargingDistance) && state == State.Patrol) {
+        if ((DistanceBetweenEnemyAndPlayerMagnitude <= ChargingDistance) && state == State.Patrol && !PlayerController.Instance.isDead())
+        {
             ChangeStateToCharge();
         }
 
         // Move from Charge state to Attack state.
-        if (canAttack()) {
-            if (DistanceBetweenEnemyAndPlayerMagnitude <= Agent.stoppingDistance && isMeleeAttack ) {
+        if (canAttack())
+        {
+            if (DistanceBetweenEnemyAndPlayerMagnitude <= Agent.stoppingDistance && isMeleeAttack)
+            {
                 ChangeStateToAttack();
             }
         }
 
         if (state == State.Charge && !stunned)
         {
-            if (DistanceBetweenEnemyAndPlayerMagnitude <= Agent.stoppingDistance)
+            if (Agent.velocity == Vector3.zero)
             {
                 m_Animator.SetTrigger("enemyIdleAnimation");
                 m_Animator.ResetTrigger("enemyRunningAnimation");
@@ -77,28 +83,33 @@ public class AIBossStateController : MonoBehaviour {
             }
         }
 
-        if (stunned) {
+        if (stunned)
+        {
             transform.position = stunPosition;
         }
     }
 
-    bool canAttack(){
-        return !stunned && state == State.Charge && (System.Math.Abs(lastAttackTime) < 0.1 ? true : Time.time >= lastAttackTime + AttackScript.AttackCooldownInSecs * 60 * Time.deltaTime);
+    bool canAttack()
+    {
+        return !stunned && state == State.Charge && !PlayerController.Instance.isDead() && (System.Math.Abs(lastAttackTime) < 0.1 || Time.time >= lastAttackTime + AttackScript.AttackCooldownInSecs * 60 * Time.deltaTime);
     }
 
-    void ChangeStateToCharge() {
+    void ChangeStateToCharge()
+    {
         PatrollingScript.enabled = false;
         ChargingScript.enabled = true;
         state = State.Charge;
     }
 
-    void ChangeStateToPatrol() {
+    void ChangeStateToPatrol()
+    {
         PatrollingScript.enabled = true;
         ChargingScript.enabled = false;
         state = State.Patrol;
     }
 
-    void ChangeStateToAttack() {
+    void ChangeStateToAttack()
+    {
         PatrollingScript.enabled = false;
         ChargingScript.enabled = false;
         m_Animator.ResetTrigger("enemyRunningAnimation");
@@ -108,12 +119,15 @@ public class AIBossStateController : MonoBehaviour {
         if (attackIndex == weakPoints.Count)
         {
             m_Animator.SetTrigger("enemyAttackAnimation");
-            AttackScript.Attack();
+            AttackScript.Attack(playerTransform, null);
             Debug.Log("normal attack");
         }
-        else {
-            if (attackIndex == weakPoints.Count + 1 ){
-                if (AttackScript.AttackCooldownInSecs != 1){
+        else
+        {
+            if (attackIndex == weakPoints.Count + 1)
+            {
+                if (AttackScript.AttackCooldownInSecs != 1)
+                {
                     // Rage Mode
                     Debug.Log("Rage Mode yabaaaa");
                     m_Animator.SetTrigger("enemyRageAnimation");
@@ -121,21 +135,23 @@ public class AIBossStateController : MonoBehaviour {
                     Invoke("ExitRageMode", 7);
                 }
             }
-            else 
+            else
             {
                 GameObject weakPoint = weakPoints[attackIndex];
                 //Shaghal animation elattack depending 3la no3 elattack
                 m_Animator.SetTrigger(weakPoint.GetComponent<AIBossWeakPoint>().attackAnimationTrigger);
-                AttackScript.Attack(weakPoint);
+                AttackScript.Attack(playerTransform, weakPoint);
                 Debug.Log("abbbbbnormal attack");
             }
         }
-        
+
         lastAttackTime = Time.time;
-        ChangeStateToCharge();
+        if (!PlayerController.Instance.isDead())
+            ChangeStateToCharge();
     }
 
-    public void ChangeStateToDead(){
+    public void ChangeStateToDead()
+    {
         Invoke("DestroyEnemy", 5);
         PatrollingScript.enabled = false;
         ChargingScript.enabled = false;
@@ -147,12 +163,13 @@ public class AIBossStateController : MonoBehaviour {
         m_Animator.SetTrigger("enemyDieAnimation");
     }
 
-    void DestroyEnemy(){
+    void DestroyEnemy()
+    {
         Destroy(this.gameObject);
     }
 
     public void RemoveWeakPoint(GameObject weakPoint)
-    {   
+    {
         weakPoints.Remove(weakPoint);
         stunned = true;
         stunPosition = transform.position;

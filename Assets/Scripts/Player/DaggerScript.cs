@@ -2,8 +2,10 @@
 
 public class DaggerScript : MonoBehaviour
 {
-    //SINGLETON:
     private static DaggerScript instance;
+    private GameObject enemy;
+    public int attackDoneType;
+    float lightDamage, heavyDamage;
 
     public static DaggerScript Instance
     {
@@ -24,18 +26,12 @@ public class DaggerScript : MonoBehaviour
         //DontDestroyOnLoad(this.gameObject);
     }
 
-    GameObject enemy;
-    public int attackDoneType;
-    float lightDamage, heavyDamage;
-
-    // Use this for initialization
-    void Start()
+    private void Start()
     {
         attackDoneType = 0;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
 
     }
@@ -103,7 +99,6 @@ public class DaggerScript : MonoBehaviour
     //when kratos hits an enemy:
     private void OnTriggerEnter(Collider other)
     {
-
         //get the light damage and heavy damage to be passsed to the enemies:
         lightDamage = PlayerController.Instance.GetLightDamage();
         heavyDamage = PlayerController.Instance.GetHeavyDamage();

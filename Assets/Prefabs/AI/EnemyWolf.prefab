@@ -1978,7 +1978,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1555709988654528}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.68287456, y: 1, z: -41.404324}
+  m_LocalPosition: {x: 19.276669, y: 8.457254e-16, z: -38.088085}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_Children:
   - {fileID: 4390451040032692}
@@ -2305,6 +2305,7 @@ MonoBehaviour:
   ChargingDistance: 200
   isRangedAttack: 0
   isMeleeAttack: 1
+  state: 0
 --- !u!114 &114073462203128664
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2344,7 +2345,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50c683b66b76b402eade1e8eb0dfb686, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 100
+  health: 50
 --- !u!114 &114390147676916502
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2379,7 +2380,6 @@ MonoBehaviour:
   m_MoveSpeedMultiplier: 0.7
   m_AnimSpeedMultiplier: 0.7
   m_GroundCheckDistance: 0.2
-  m_IsGrounded: 0
 --- !u!136 &136898289807552668
 CapsuleCollider:
   m_ObjectHideFlags: 1
