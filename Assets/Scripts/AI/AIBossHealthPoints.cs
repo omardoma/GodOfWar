@@ -10,25 +10,25 @@ public class AIBossHealthPoints : MonoBehaviour
     void Start()
     {
         stateController = GetComponent<AIBossStateController>();
-    }
-
-    void Update()
-    {
-        if (health == 0) {
-            stateController.ChangeStateToDead();
-        }
+        m_Animator = GetComponent<Animator>();
     }
 
     public void EnemyHit(float damage)
     {
         if (health > 0)
         {
+
             health -= (int)damage;
-            m_Animator.ResetTrigger("enemyIdleAnimation");
-            m_Animator.ResetTrigger("enemyRunningAnimation");
-            m_Animator.ResetTrigger("enemyAttackAnimation");
-            m_Animator.ResetTrigger("enemyDieAnimation");
-            m_Animator.SetTrigger("enemyHitAnimation");
+            if (health > 0)
+            {
+                m_Animator.SetTrigger("enemyHitAnimation");
+            }
+            else
+            {
+                stateController.ChangeStateToDead();
+            }
+
         }
+
     }
 }

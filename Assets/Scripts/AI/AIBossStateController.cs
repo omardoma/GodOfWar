@@ -11,8 +11,8 @@ public class AIBossStateController : MonoBehaviour
     [Tooltip("Indicates whether the enemy uses melee attacks.")]
     public bool isMeleeAttack = true;
 
-    private enum State { Patrol, Charge, Attack, Dead };
-    private State state;
+    public enum State { Patrol, Charge, Attack, Dead };
+    public State state;
 
     List<GameObject> weakPoints = new List<GameObject>();
 
@@ -157,14 +157,13 @@ public class AIBossStateController : MonoBehaviour
         ChargingScript.enabled = false;
         state = State.Dead;
         m_Rigidbody.constraints = RigidbodyConstraints.FreezePosition;
-        m_Animator.ResetTrigger("enemyIdleAnimation");
-        m_Animator.ResetTrigger("enemyRunningAnimation");
-        m_Animator.ResetTrigger("enemyAttackAnimation");
+        m_Animator.SetTrigger("enemyIdleAnimation");
         m_Animator.SetTrigger("enemyDieAnimation");
     }
 
     void DestroyEnemy()
     {
+
         Destroy(this.gameObject);
     }
 

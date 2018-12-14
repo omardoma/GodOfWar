@@ -2,11 +2,17 @@
 
 public class AIEnemyAttack : MonoBehaviour
 {
+    private AIEnemyStateController stateController;
     public float attackValue;
     public int AttackCooldownInSecs;
     public float rangedAttackDistance;
 
     public GameObject SpiderAttack;
+
+    private void Start()
+    {
+        stateController = GetComponent<AIEnemyStateController>();
+    }
 
     public void Attack(Transform target)
     {
@@ -15,7 +21,7 @@ public class AIEnemyAttack : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(transform.position, transform.forward, out hit))
         {
-            if (hit.collider.gameObject.tag == "Player")
+            if (hit.collider.gameObject.tag == "Player" && stateController.state != AIEnemyStateController.State.Dead)
             {
                 hit.collider.gameObject.GetComponent<PlayerController>().KratosGotHit();
                 // call el function beta3et 2l hit (blocking wala 3adi ? law 3adi yena2as el health w yesha8al el animation)

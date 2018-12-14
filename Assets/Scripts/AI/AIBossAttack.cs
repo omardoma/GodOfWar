@@ -2,9 +2,15 @@
 
 public class AIBossAttack : MonoBehaviour
 {
+    private AIBossStateController stateController;
     public float attackValue;
     public int AttackCooldownInSecs = 5;
     public float rangedAttackDistance;
+
+    private void Start()
+    {
+        stateController = GetComponent<AIBossStateController>();
+    }
 
     public void Attack(Transform target, GameObject weakPoint = null)
     {
@@ -13,7 +19,7 @@ public class AIBossAttack : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(transform.position, transform.forward, out hit))
         {
-            if (hit.collider.gameObject.tag == "Player")
+            if (hit.collider.gameObject.tag == "Player" && stateController.state != AIBossStateController.State.Dead)
             {
                 var damage = weakPoint == null ? attackValue : weakPoint.GetComponent<AIBossWeakPoint>().attackValue;
                 Debug.Log("Attack happened");

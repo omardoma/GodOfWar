@@ -89,6 +89,12 @@ public class GameController : MonoBehaviour
             }
 
         }
+
+        GameObject boss = GameObject.FindGameObjectWithTag("Boss");
+        if (boss != null && boss.GetComponent<AIBossStateController>().state == AIBossStateController.State.Charge)
+        {
+            return true;
+        }
         return false;
     }
 

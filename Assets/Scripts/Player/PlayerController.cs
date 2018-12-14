@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEditor;
 using UnityStandardAssets.Characters.ThirdPerson;
 
 public class PlayerController : MonoBehaviour
@@ -241,6 +240,11 @@ public class PlayerController : MonoBehaviour
     public int GetXp()
     {
         return xp;
+    }
+
+    public void IncreaseXP()
+    {
+        xp += 50;
     }
 
     public int GetSkillPoints()
