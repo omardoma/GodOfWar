@@ -43,30 +43,30 @@ public class GameScreenController : MonoBehaviour
     private void SetHealth()
     {
         float health = PlayerController.Instance.GetHealthPoints();
-        healthBar.BarValue = health < 0 ? 0 : health > 100 ? 100 : health;
+        healthBar.BarValue = health;
     }
 
     private void SetRage()
     {
         float rage = PlayerController.Instance.GetRage();
-        rageBar.BarValue = rage < 0 ? 0 : rage > 100 ? 100 : rage;
+        rageBar.BarValue = rage;
     }
 
     private void SetXP()
     {
         float xp = PlayerController.Instance.GetXp();
-        xpBar.BarValue = xp < 0 ? 0 : xp > 100 ? 100 : xp;
+        xpBar.BarValue = xp;
     }
 
     private void SetLevel()
     {
         int level = PlayerController.Instance.GetLevel();
-        this.levelText.text = "Level: " + (level < 1 ? 1 : level);
+        this.levelText.text = "Level: " + level;
     }
 
     private void SetSkillPoints()
     {
         float sp = PlayerController.Instance.GetSkillPoints();
-        skillPoints.text = "Skill Points: " + (sp < 0 ? 0 : sp);
+        skillPoints.text = "Skill Points: " + sp;
     }
 }

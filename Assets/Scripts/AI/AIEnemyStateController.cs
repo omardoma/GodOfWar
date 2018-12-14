@@ -138,6 +138,7 @@ public class AIEnemyStateController : MonoBehaviour
 
     public void changeStateToDead()
     {
+        SoundController.Instance.PlayEnemyDeath();
         Invoke("DestroyEnemy", 5);
         PatrollingScript.enabled = false;
         ChargingScript.enabled = false;

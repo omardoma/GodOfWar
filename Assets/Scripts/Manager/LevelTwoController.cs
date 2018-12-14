@@ -1,14 +1,17 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class GameController : MonoBehaviour
+public class LevelTwoController : MonoBehaviour
 {
-    private static GameController instance;
+    private static LevelTwoController instance;
     private bool calm;
     public GameObject gamePanel;
     public GameObject pausePanel;
     public GameObject gameOverPanel;
+    public GameObject creditsPanel;
+    public GameObject upgradePanel;
 
-    public static GameController Instance
+    public static LevelTwoController Instance
     {
         get
         {
@@ -30,11 +33,12 @@ public class GameController : MonoBehaviour
 
     private void Start()
     {
+        GameOver = false;
         Time.timeScale = 1;
         PlayerController.Instance.Reset();
         GameObject player = GameObject.FindWithTag("Player");
-        player.transform.position = new Vector3(0, 0, -35f);
-        player.transform.rotation = new Quaternion(0, 0, 0, 0);
+        player.transform.position = new Vector3(0, 20, -25f);
+        player.transform.rotation = Quaternion.identity;
     }
 
     private void Update()
@@ -44,6 +48,12 @@ public class GameController : MonoBehaviour
             if (PlayerController.Instance.Dead)
             {
                 EndGame();
+                return;
+            }
+
+            if (CheckWinning())
+            {
+                ShowCredits();
                 return;
             }
 
@@ -91,12 +101,15 @@ public class GameController : MonoBehaviour
         }
 
         GameObject boss = GameObject.FindGameObjectWithTag("Boss");
-        if (boss != null && boss.GetComponent<AIBossStateController>().state == AIBossStateController.State.Charge)
-        {
-            return true;
-        }
-        return false;
+        return boss != null && boss.GetComponent<AIBossStateController>().state == AIBossStateController.State.Charge;
     }
+
+    private bool CheckWinning()
+    {
+        GameObject boss = GameObject.FindGameObjectWithTag("Boss");
+        return boss == null;
+    }
+
 
     private void PauseGame()
     {
@@ -105,6 +118,14 @@ public class GameController : MonoBehaviour
         pausePanel.SetActive(true);
         SoundController.Instance.PlayMenuMusic();
         GamePaused = true;
+    }
+
+    private void ShowCredits()
+    {
+        gamePanel.SetActive(false);
+        creditsPanel.SetActive(true);
+        SoundController.Instance.PlayMenuMusic();
+        GameOver = true;
     }
 
     private void EndGame()
@@ -119,7 +140,14 @@ public class GameController : MonoBehaviour
     public void ResumeGame()
     {
         Time.timeScale = 1;
-        pausePanel.SetActive(false);
+        if (upgradePanel.activeSelf)
+        {
+            upgradePanel.SetActive(false);
+        }
+        else
+        {
+            pausePanel.SetActive(false);
+        }
         gamePanel.SetActive(true);
         if (calm)
         {

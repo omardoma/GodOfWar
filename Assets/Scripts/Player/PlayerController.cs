@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityStandardAssets.Characters.ThirdPerson;
 
 public class PlayerController : MonoBehaviour
@@ -70,13 +71,27 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        if (!(GameController.Instance.GamePaused || GameController.Instance.GameOver))
+        if (SceneManager.GetActiveScene().buildIndex == 1)
         {
-            CheckNearChest();
-            CheckDeath();
-            CheckAttackInput();
-            CheckRage(); //If the rage meter is full --> rageFull = true
-            CheckXP();
+            if (!(LevelOneController.Instance.GamePaused || LevelOneController.Instance.GameOver))
+            {
+                CheckNearChest();
+                CheckDeath();
+                CheckAttackInput();
+                CheckRage(); //If the rage meter is full --> rageFull = true
+                CheckXP();
+            }
+        }
+        else
+        {
+            if (!(LevelTwoController.Instance.GamePaused || LevelTwoController.Instance.GameOver))
+            {
+                CheckNearChest();
+                CheckDeath();
+                CheckAttackInput();
+                CheckRage(); //If the rage meter is full --> rageFull = true
+                CheckXP();
+            }
         }
     }
 
@@ -121,6 +136,7 @@ public class PlayerController : MonoBehaviour
     {
         if (healthPoints <= 0)
         {
+            SoundController.Instance.PlayKratosDeath();
             Dead = true;
             anim.SetBool("Dead", true);  //For the death animation to work
         }
@@ -130,6 +146,7 @@ public class PlayerController : MonoBehaviour
     {
         if (nearChest && Input.GetKeyDown(KeyCode.X) && !chest.GetComponent<ChestScript>().GetChestOpened())
         {
+            SoundController.Instance.PlayCollectItem();
             chest.GetComponent<ChestScript>().SetOpen(true);
             RestoreHealth();
         }
@@ -142,6 +159,7 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKey(KeyCode.R) && rageFull)  //if the user presses on R (and the rage is full) --> the rage mode: ON
         {
+            SoundController.Instance.PlayRageActivation();
             timeLeft = rageDuration;
             rageMode = true;
             rage = 0;
@@ -178,6 +196,7 @@ public class PlayerController : MonoBehaviour
     public void KratosGotHit()
     {
         Debug.Log("Etdarabt");
+        SoundController.Instance.PlayKratosHit();
         //when an enemy hits kratos, health points decreases by 10:
         healthPoints -= 10.0f;
         anim.SetTrigger("Hit");

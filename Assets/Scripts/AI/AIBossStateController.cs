@@ -96,6 +96,7 @@ public class AIBossStateController : MonoBehaviour
 
     void ChangeStateToCharge()
     {
+        SoundController.Instance.PlayBossSpeech();
         PatrollingScript.enabled = false;
         ChargingScript.enabled = true;
         state = State.Charge;
@@ -152,6 +153,7 @@ public class AIBossStateController : MonoBehaviour
 
     public void ChangeStateToDead()
     {
+        SoundController.Instance.PlayEnemyDeath();
         Invoke("DestroyEnemy", 5);
         PatrollingScript.enabled = false;
         ChargingScript.enabled = false;
@@ -163,7 +165,6 @@ public class AIBossStateController : MonoBehaviour
 
     void DestroyEnemy()
     {
-
         Destroy(this.gameObject);
     }
 

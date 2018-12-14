@@ -29,7 +29,7 @@ public class SoundController : MonoBehaviour
         }
 
         instance = this;
-        //DontDestroyOnLoad(this.gameObject);
+        DontDestroyOnLoad(this.gameObject);
     }
 
     public void SetMusicVolume(float volume)

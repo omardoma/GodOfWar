@@ -51,20 +51,14 @@ public class DaggerScript : MonoBehaviour
                 if (attackDoneType == 1)
                 {
                     Debug.Log("light and boss");
+                    SoundController.Instance.PlayEnemyHit();
                     bossCtrl.EnemyHit(lightDamage);
                 }
                 else if (attackDoneType == 2)
                 {
                     Debug.Log("high and boss");
+                    SoundController.Instance.PlayEnemyHit();
                     bossCtrl.EnemyHit(heavyDamage);
-                }
-
-                if (bossCtrl.health <= 0)
-                {
-                    //BOSS DEAD:
-                    //  Animation of dead boss
-                    //  Game over
-                    //  Credites
                 }
             }
 
@@ -75,11 +69,13 @@ public class DaggerScript : MonoBehaviour
                 if (attackDoneType == 1)
                 {
                     Debug.Log("light and foe");
+                    SoundController.Instance.PlayEnemyHit();
                     foeCtrl.EnemyHit(lightDamage);
                 }
                 else if (attackDoneType == 2)
                 {
                     Debug.Log("high and foe");
+                    SoundController.Instance.PlayEnemyHit();
                     foeCtrl.EnemyHit(heavyDamage);
                 }
 
