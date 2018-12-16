@@ -32,9 +32,8 @@ public class LevelOneController : MonoBehaviour
 
     private void Start()
     {
-        GameOver = false;
-        Time.timeScale = 1;
         PlayerController.Instance.Reset();
+        Time.timeScale = 1;
         GameObject player = GameObject.FindWithTag("Player");
         player.transform.position = new Vector3(0, 20, -25f);
         player.transform.rotation = Quaternion.identity;
@@ -46,7 +45,7 @@ public class LevelOneController : MonoBehaviour
         {
             if (PlayerController.Instance.Dead)
             {
-                EndGame();
+                Invoke("EndGame", 5);
                 return;
             }
 

@@ -22,6 +22,12 @@ public class UpgradeScreenController : MonoBehaviour
         HideButtonsOnZero();
     }
 
+    private void Update()
+    {
+        SetSkillPoints();
+        HideButtonsOnZero();
+    }
+
     private void HideButtonsOnZero()
     {
         bool hasLeft = PlayerController.Instance.GetSkillPoints() > 0;
@@ -35,7 +41,6 @@ public class UpgradeScreenController : MonoBehaviour
         PlayerController.Instance.UpgradeMovement();
         movementBar.BarValue = PlayerController.Instance.GetSpeed();
         SetSkillPoints();
-        HideButtonsOnZero();
     }
 
     public void AddAttack()
@@ -44,7 +49,6 @@ public class UpgradeScreenController : MonoBehaviour
         lightAttackBar.BarValue = PlayerController.Instance.GetLightDamage();
         heavyAttackBar.BarValue = PlayerController.Instance.GetHeavyDamage();
         SetSkillPoints();
-        HideButtonsOnZero();
     }
 
     public void AddHealth()
@@ -52,7 +56,6 @@ public class UpgradeScreenController : MonoBehaviour
         PlayerController.Instance.UpgradeHealth();
         healthBar.BarValue = PlayerController.Instance.GetHealthPoints();
         SetSkillPoints();
-        HideButtonsOnZero();
     }
 
     public void SetSkillPoints()

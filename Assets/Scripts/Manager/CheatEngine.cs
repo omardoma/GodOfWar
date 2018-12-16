@@ -37,6 +37,10 @@ public class CheatEngine : MonoBehaviour
         {
             KillBoss();
         }
+        else if (Input.GetKeyUp(KeyCode.B))
+        {
+            KillKratos();
+        }
     }
 
     private void KillEnemies()
@@ -54,6 +58,11 @@ public class CheatEngine : MonoBehaviour
         {
             Destroy(boss);
         }
+    }
+
+    private void KillKratos()
+    {
+        PlayerController.Instance.KillKratos();
     }
 
     private void RestorePlayerHealth()

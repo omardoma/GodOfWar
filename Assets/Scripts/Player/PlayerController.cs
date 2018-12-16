@@ -71,7 +71,8 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        if (SceneManager.GetActiveScene().buildIndex == 1)
+        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        if (currentSceneIndex == 1)
         {
             if (!(LevelOneController.Instance.GamePaused || LevelOneController.Instance.GameOver))
             {
@@ -82,7 +83,7 @@ public class PlayerController : MonoBehaviour
                 CheckXP();
             }
         }
-        else
+        else if (currentSceneIndex == 2)
         {
             if (!(LevelTwoController.Instance.GamePaused || LevelTwoController.Instance.GameOver))
             {
@@ -281,9 +282,19 @@ public class PlayerController : MonoBehaviour
         return heavyAttackDamage;
     }
 
+    public void KillKratos()
+    {
+        healthPoints = 0;
+    }
+
     public void Reset()
     {
         RestoreHealth();
+        Dead = false;
         rage = 0;
+        rageMode = false;
+        rageDuration = 50.0f;
+        rage = 0;
+        anim.SetBool("Dead", false);
     }
 }
