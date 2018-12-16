@@ -133,7 +133,6 @@ public class SoundController : MonoBehaviour
 
     public void PauseSounds()
     {
-        musicSource.Pause();
         sfxSource.Pause();
         speechSource.Pause();
     }

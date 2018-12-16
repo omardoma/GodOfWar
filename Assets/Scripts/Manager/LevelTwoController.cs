@@ -33,7 +33,6 @@ public class LevelTwoController : MonoBehaviour
 
     private void Start()
     {
-        GameOver = false;
         Time.timeScale = 1;
         PlayerController.Instance.Reset();
         GameObject player = GameObject.FindWithTag("Player");
